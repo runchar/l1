@@ -4,13 +4,7 @@ from datasets import load_dataset
 
 ds_mmlu = load_dataset("cais/mmlu", "all")
 
-# for num_tokens in [512, 1024, 2048, 3600, 4096, 8192, 16384, 32768]:
-for num_tokens in [-512, -1024, -2048, -3600, -4096, -8192]:
-# for num_tokens in [128, 256]:
-# for num_tokens in [4000]:
-# for num_tokens in [-1]:
-    # for num_tokens in [32768]:
-    # for num_tokens in [-1]:
+for num_tokens in [512, 1024, 2048, 3600, -512, -1024, -2048, -3600, -1]:
     all_data = []
     for i in range(len(ds_mmlu['test'])):
         row = ds_mmlu['test'][i]

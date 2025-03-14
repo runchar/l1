@@ -6,9 +6,7 @@ export VLLM_ATTENTION_BACKEND=XFORMERS
 MODEL_PATH="$HOME/DeepScaleR-1.5B-Preview"
 NUM_TOKENS=512  # Add default NUM_TOKENS
 MAX_TOKENS=$((NUM_TOKENS * 2))  # Set MAX_TOKENS to twice NUM_TOKENS
-# agentica-org/DeepScaleR-1.5B-Preview
-# Possible values: aime, amc, math, minerva, olympiad_bench
-# DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "minerva" "olympiad_bench")
+DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
 
 OUTPUT_DIR="$HOME"  # Add default output directory
 

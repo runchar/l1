@@ -21,7 +21,7 @@ from verl.utils.reward_score import gsm8k, math
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 
 import sys
-sys.path.append('/data/group_data/l3lab/pranjala/deepscaler')
+sys.path.append('../../../deepscaler')
 from deepscaler.rewards.math_reward import deepscaler_reward_fn
 
 import random

@@ -6,17 +6,9 @@ export VLLM_ATTENTION_BACKEND=XFORMERS
 MODEL_PATH="$HOME/DeepScaleR-1.5B-Preview"
 NUM_TOKENS=512  # Add default NUM_TOKENS
 MAX_TOKENS=$((NUM_TOKENS * 2))  # Set MAX_TOKENS to twice NUM_TOKENS
-# agentica-org/DeepScaleR-1.5B-Preview
-# Possible values: aime, amc, math, minerva, olympiad_bench
-# DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime" "math" "amc" "minerva" "olympiad_bench")
-DATATYPES=("gpqa" "lsat" "mmlu_1000")
-DATATYPES=("aime2025")
-# DATATYPES=("gpqa" "lsat" "aime" "math" "amc" "minerva" "olympiad_bench")
 
-# DATATYPES=("aime")
-# DATATYPES=("gpqa")
-# DATATYPES=("lsat")
-# DATATYPES=("mmlu_1000")
+# Possible values: aime, amc, math, minerva, olympiad_bench
+DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime" "math" "amc" "minerva" "olympiad_bench" "aime2025")
 
 # DATATYPES=("math")
 OUTPUT_DIR="$HOME"  # Add default output directory
@@ -62,15 +54,14 @@ echo "Output Directory: ${OUTPUT_DIR}"
 echo "Number of Tokens: ${NUM_TOKENS}"
 echo "Max Tokens: ${MAX_TOKENS}"
 
-# MAX_TOKENS=8192
 
 # Loop through all datatypes
 for DATA_TYPE in "${DATATYPES[@]}"; do
     python3 -m verl.trainer.main_generation \
         trainer.nnodes=1 \
         trainer.n_gpus_per_node=8 \
-        data.path=$HOME/deepscaler/data9_${NUM_TOKENS}/${DATA_TYPE}.parquet \
-        data.output_path=${OUTPUT_DIR}9_${NUM_TOKENS}/${DATA_TYPE}.parquet \
+        data.path=$HOME/deepscaler/data_max_${NUM_TOKENS}/${DATA_TYPE}.parquet \
+        data.output_path=${OUTPUT_DIR}_max_${NUM_TOKENS}/${DATA_TYPE}.parquet \
         data.n_samples=16 \
         data.batch_size=2048 \
         model.path=${MODEL_PATH} \

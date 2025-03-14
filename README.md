@@ -59,11 +59,26 @@ For example, evaluate L1-Exact on AIME2025:
 ./scripts/eval/eval_model_token.sh --model path/to/your/model --num-tokens <num_tokens> --datasets aime2025
 ```
 
+### Replicate Results
+
+To replicate results for L1-Exact and L1-Max from the [paper](https://arxiv.org/abs/2503.04697), you can use scripts in `scripts/replicate`.
+
+1. Prepare data:
+```
+./scripts/replicate/prepare_data.sh
+```
+
+2. Evaluate models:
+```
+./scripts/replicate/eval_inference_exact.sh l3lab/L1-Qwen-1.5B-Exact
+./scripts/replicate/eval_inference_max.sh l3lab/L1-Qwen-1.5B-Max
+```
+
 ## Acknowledgments
 
 - We would like to thank DeepSeek for releasing Deepseek-r1 and distilled models, 
 - Qwen for releasing super-awesome Qwen-2.5 math Models, and 
-- [Agentica](https://github.com/agentica-project/deepscaler) for codebase, and opensourcing their models and datasets! 
+- [Agentica](https://github.com/agentica-project/deepscaler) for codebase, and opensourcing their models and datasets! This codebase is built on top of their work.
 
 
 ## Citation

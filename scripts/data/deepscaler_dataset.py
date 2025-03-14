@@ -13,7 +13,7 @@ import pandas as pd
 from verl.utils.hdfs_io import copy, makedirs
 from verl.utils.reward_score.math import last_boxed_only_string, remove_boxed
 import sys
-sys.path.append('/data/group_data/l3lab/pranjala/deepscaler')
+sys.path.append('../../deepscaler')
 from deepscaler.data.utils import load_dataset
 from deepscaler.data.dataset_types import TrainDataset, TestDataset
 
@@ -55,21 +55,16 @@ def make_map_fn(split: str):
             random_number = -1
         else:
             if USE_BOTH:
-                # With 50% probability, sample a number between 100 and 4000
                 if random.random() < 0.5:
                     random_number = random.randint(100, 4000)
                 else:
                     random_number = -1
             elif USE_BOTH_BOTH:
                 random_number = random.randint(100, 4000)
-                # With random probability, sample a number between -4000 and -100
                 if random.random() < 0.5:
-                # if random.random() < 5:
                     random_number = -1 * random_number
-                # random_number = -6000
             else:
                 random_number = random.randint(100, 4000)
-        # print(random_number)
         instruction = "Let's think step by step and output the final answer within \\boxed{}."
         if NUM_TOKENS != -1:
             if NUM_TOKENS < 0:
@@ -84,7 +79,6 @@ def make_map_fn(split: str):
                     instruction = f"{instruction} Think for {random_number} tokens."
             else:
                 instruction = f"{instruction}"
-        # instruction = f"{instruction} Answer the following question using {random_number} words or less (including words inside <think> and </think>). You will get a 0 score if you exceed {random_number} words."
         print(instruction[-50:])
         
         question = f"{question} {instruction}"
@@ -188,8 +182,3 @@ if __name__ == '__main__':
     if hdfs_dir is not None:
         makedirs(hdfs_dir)
         copy(src=local_dir, dst=hdfs_dir)
-
-## DATA6: Normal/Standard dataset, without any thinking limit
-## DATA5: Both Normal and Token constraints
-## DATA7: Both max budget and token constraints
-## Data10: Only max budget constraint

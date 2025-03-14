@@ -33,7 +33,7 @@ if tok.pad_token is None:
 stop_token_ids = tok("<|im_end|>")["input_ids"]
 
 import pandas as pd
-df = pd.read_parquet(f'/home/pranjala/deepscaler/data/{DSET}.parquet')
+df = pd.read_parquet(f'deepscaler/data/{DSET}.parquet')
 
 prompts = [df['prompt'][i][0]['content'] for i in range(len(df))]
 
