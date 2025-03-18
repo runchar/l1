@@ -41,10 +41,10 @@ python scripts/data/deepscaler_dataset.py --use_both_both
 
 For Evaluation on AIME2025, GPQA, LSAT and MMLU, you can use scripts in `scripts/eval`:
 ```
-python scripts/eval/generate_aime.py
-python scripts/eval/generate_gpqa.py
-python scripts/eval/generate_lsat.py
-python scripts/eval/generate_mmlu.py
+python scripts/data/generate_aime.py
+python scripts/data/generate_gpqa.py
+python scripts/data/generate_lsat.py
+python scripts/data/generate_mmlu.py
 ```
 
 ### Train Models

@@ -139,7 +139,7 @@ if __name__ == '__main__':
     if NUM_TOKENS != -1:
         local_dir = local_dir+'_'+str(NUM_TOKENS)
     # Make local directory if it doesn't exist
-    makedirs(local_dir)
+    makedirs(local_dir, exist_ok=True)
 
     # Initialize datasets
     train_datasets = [TrainDataset.DEEPSCALER]
