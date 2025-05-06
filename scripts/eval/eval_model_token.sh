@@ -8,7 +8,7 @@ NUM_TOKENS=512  # Add default NUM_TOKENS
 MAX_TOKENS=$((NUM_TOKENS * 2))  # Set MAX_TOKENS to twice NUM_TOKENS
 DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
 
-OUTPUT_DIR="$HOME"  # Add default output directory
+OUTPUT_DIR="$HOME/deepscaler/results"  # Add default output directory
 
 
 # Parse named arguments
@@ -55,7 +55,7 @@ echo "Max Tokens: ${MAX_TOKENS}"
 
 # Loop through all datatypes
 for DATA_TYPE in "${DATATYPES[@]}"; do
-    python3 -m verl.trainer.main_generation \
+    python3 main_generation.py \
         trainer.nnodes=1 \
         trainer.n_gpus_per_node=8 \
         data.path=$HOME/deepscaler/data_${NUM_TOKENS}/${DATA_TYPE}.parquet \

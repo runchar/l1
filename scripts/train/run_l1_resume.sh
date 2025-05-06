@@ -24,7 +24,7 @@ if [ -z "$MODEL_PATH" ]; then
 fi
 
 # Train over a single node, 8 A100-80GB GPUs.
-python3 -m verl.trainer.main_ppo \
+python3 main_ppo.py \
     algorithm.adv_estimator=grpo \
     data.train_files=$HOME/deepscaler/data/train.parquet \
     data.val_files=$HOME/deepscaler/data/aime.parquet \

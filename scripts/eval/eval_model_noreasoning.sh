@@ -12,7 +12,7 @@ DATATYPES=("apps")
 
 
 # DATATYPES=("math")
-OUTPUT_DIR="$HOME"  # Add default output directory
+OUTPUT_DIR="$HOME/deepscaler/results"  # Add default output directory
 
 # Parse named arguments
 while [[ $# -gt 0 ]]; do
@@ -49,7 +49,7 @@ echo "Output Directory: ${OUTPUT_DIR}"
 
 # Loop through all datatypes
 for DATA_TYPE in "${DATATYPES[@]}"; do
-    python3 -m verl.trainer.main_generation \
+    python3 main_generation.py \
         trainer.nnodes=1 \
         trainer.n_gpus_per_node=8 \
         data.path=$HOME/deepscaler/data/${DATA_TYPE}.parquet \

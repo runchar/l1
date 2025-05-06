@@ -57,7 +57,7 @@ echo "Max Tokens: ${MAX_TOKENS}"
 
 # Loop through all datatypes
 for DATA_TYPE in "${DATATYPES[@]}"; do
-    python3 -m verl.trainer.main_generation \
+    python3 main_generation.py \
         trainer.nnodes=1 \
         trainer.n_gpus_per_node=8 \
         data.path=$HOME/deepscaler/data_max_${NUM_TOKENS}/${DATA_TYPE}.parquet \

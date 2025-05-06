@@ -26,7 +26,7 @@ for num_tokens in [512, 1024, 2048, 3600, -512, -1024, -2048, -3600, -1]:
             question += f"{chr(65 + i)}. {choice}\n"
         correct_choice = chr(65 + shuffled_choices.index(correct_answer))
         if num_tokens < -1:
-            question = f"{question}"+"\n\nLet's think step by step and output the final answer (eg, A, B, C, D) within \\boxed{}." + f" Think for maximum {num_tokens} tokens."
+            question = f"{question}"+"\n\nLet's think step by step and output the final answer (eg, A, B, C, D) within \\boxed{}." + f" Think for maximum {abs(num_tokens)} tokens."
         else:
             question = f"{question}"+"\n\nLet's think step by step and output the final answer (eg, A, B, C, D) within \\boxed{}." + f" Think for {num_tokens} tokens."
 
