@@ -1,0 +1,1 @@
+python scripts/data/deepscaler_dataset.py --local_dir /mnt/f/WorkSpace/Thinking/L1/dataset

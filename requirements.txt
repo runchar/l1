@@ -1,3 +1,40 @@
-torch
-torchvision
-tabulate
+(fuckingl1) thankyou@Natural:/mnt/f/WorkSpace/Thinking/L1$ conda info
+
+     active environment : fuckingl1
+    active env location : /home/thankyou/miniconda3/envs/fuckingl1
+            shell level : 8
+       user config file : /home/thankyou/.condarc
+ populated config files : /home/thankyou/miniconda3/.condarc
+                          /home/thankyou/.condarc
+          conda version : 25.5.1
+    conda-build version : not installed
+         python version : 3.12.2.final.0
+                 solver : libmamba (default)
+       virtual packages : __archspec=1=skylake
+                          __conda=25.5.1=0
+                          __cuda=12.7=0
+                          __glibc=2.35=0
+                          __linux=6.6.87.2=0
+                          __unix=0=0
+       base environment : /home/thankyou/miniconda3  (writable)
+      conda av data dir : /home/thankyou/miniconda3/etc/conda
+  conda av metadata url : None
+           channel URLs : https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64
+                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/noarch
+                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64
+                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/noarch
+                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/linux-64
+                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/noarch
+                          https://repo.anaconda.com/pkgs/main/linux-64
+                          https://repo.anaconda.com/pkgs/main/noarch
+                          https://repo.anaconda.com/pkgs/r/linux-64
+                          https://repo.anaconda.com/pkgs/r/noarch
+          package cache : /home/thankyou/miniconda3/pkgs
+                          /home/thankyou/.conda/pkgs
+       envs directories : /home/thankyou/miniconda3/envs
+                          /home/thankyou/.conda/envs
+               platform : linux-64
+             user-agent : conda/25.5.1 requests/2.32.3 CPython/3.12.2 Linux/6.6.87.2-microsoft-standard-WSL2 ubuntu/22.04.3 glibc/2.35 solver/libmamba conda-libmamba-solver/25.1.1 libmambapy/2.3.0 aau/0.5.0 c/. s/. e/.
+                UID:GID : 1000:1000
+             netrc file : None
+           offline mode : False

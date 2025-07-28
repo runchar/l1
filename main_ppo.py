@@ -21,6 +21,11 @@ from verl.utils.reward_score import gsm8k, math
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 from rewards_types import RewardConfig
 
+import  transformers
+torch.set_default_dtype(torch.bfloat16)
+transformers.modeling_utils.get_parameter_dtype = lambda _: torch.bfloat16
+
+
 import sys
 from math_reward import math_reward_fn
 

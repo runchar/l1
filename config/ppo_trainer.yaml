@@ -15,16 +15,20 @@ data:
   filter_overlong_prompts_workers: 1
   truncation: error
   image_key: images
+  sampler: null  ###
+  dataloader_num_workers : 4 ###
 
 actor_rollout_ref:
   hybrid_engine: True
   model:
-    path: ~/models/deepseek-llm-7b-chat
+    path: /mnt/f/WorkSpace/Thinking/Qwen/Qwen3-0.6B
     external_lib: null
     override_config: { }
     enable_gradient_checkpointing: True
     use_remove_padding: False
+    torch_dtype: bfloat16
   actor:
+    entropy_from_logits_with_chunking: true  ###
     strategy: fsdp  # This is for backward-compatibility
     ppo_mini_batch_size: 256
     ppo_micro_batch_size: null # will be deprecated, use ppo_micro_batch_size_per_gpu
@@ -64,6 +68,7 @@ actor_rollout_ref:
       optimizer_offload: False
       fsdp_size: -1
   ref:
+    entropy_from_logits_with_chunking: true  ###
     fsdp_config:
       param_offload: False
       wrap_policy:
@@ -77,39 +82,44 @@ actor_rollout_ref:
   rollout:
     name: vllm
     temperature: 1.0
-    top_k: -1 # 0 for hf rollout, -1 for vllm rollout
+    top_k: 0
     top_p: 1
-    use_fire_sampling: False # https://arxiv.org/abs/2410.21236
-    prompt_length: ${data.max_prompt_length}  # not use for opensource
+    mode: sync
+    use_fire_sampling: False
+    prompt_length: ${data.max_prompt_length}
     response_length: ${data.max_response_length}
-    # for vllm rollout
-    dtype: bfloat16 # should align with FSDP
+    dtype: bfloat16
     gpu_memory_utilization: 0.5
     ignore_eos: False
     enforce_eager: True
     free_cache_engine: True
     load_format: dummy_dtensor
-    tensor_model_parallel_size: 2
+    tensor_model_parallel_size: 1
     max_num_batched_tokens: 32768
     max_model_len: null
     max_num_seqs: 1024
-    log_prob_micro_batch_size: null # will be deprecated, use log_prob_micro_batch_size_per_gpu
+    log_prob_micro_batch_size: null
     log_prob_micro_batch_size_per_gpu: null
     log_prob_use_dynamic_bsz: ${actor_rollout_ref.actor.use_dynamic_bsz}
     log_prob_max_token_len_per_gpu: ${actor_rollout_ref.actor.ppo_max_token_len_per_gpu}
     disable_log_stats: True
-    enable_chunked_prefill: True # may get higher throughput when set to True. When activated, Please increase max_num_batched_tokens or decrease max_model_len.
-    # for hf rollout
+    enable_chunked_prefill: True
     do_sample: True
-    # number of responses (i.e. num sample times)
-    n: 1 # > 1 for grpo
+    n: 1
+    calculate_log_probs: false
+    sglang_kwargs:
+      # sglang rollout专用参数
+      max_window_layers: 28
+      sliding_window: null
+      use_sliding_window: false
+      rope_theta: 1000000
+      use_cache: true
     val_kwargs:
-      # sampling parameters for validation
-      top_k: -1 # 0 for hf rollout, -1 for vllm rollout
+      top_k: 0
       top_p: 1.0
       temperature: 0.6
       n: 16
-      do_sample: False # default eager for validation
+      do_sample: True
 
 critic:
   rollout_n: ${actor_rollout_ref.rollout.n}
@@ -122,12 +132,13 @@ critic:
     total_training_steps: -1  # must be override by program
     weight_decay: 0.01
   model:
-    path: ~/models/deepseek-llm-7b-chat
-    tokenizer_path: ${actor_rollout_ref.model.path}
+    path: /mnt/f/WorkSpace/Thinking/Qwen/Qwen3-0.6B
+    tokenizer_path: /mnt/f/WorkSpace/Thinking/Qwen/Qwen3-0.6B
     override_config: { }
     external_lib: ${actor_rollout_ref.model.external_lib}
     enable_gradient_checkpointing: True
     use_remove_padding: False
+    torch_dtype: bfloat16
     fsdp_config:
       param_offload: False
       optimizer_offload: False
@@ -141,7 +152,7 @@ critic:
   forward_micro_batch_size: ${critic.ppo_micro_batch_size}
   forward_micro_batch_size_per_gpu: ${critic.ppo_micro_batch_size_per_gpu}
   use_dynamic_bsz: ${actor_rollout_ref.actor.use_dynamic_bsz}
-  ppo_max_token_len_per_gpu: 32768 # (${actor_rollout_ref.actor.ppo_max_token_len_per_gpu}) * 2
+  ppo_max_token_len_per_gpu: 4096 # (${actor_rollout_ref.actor.ppo_max_token_len_per_gpu}) * 2
   forward_max_token_len_per_gpu: ${critic.ppo_max_token_len_per_gpu}
   ulysses_sequence_parallel_size: 1 # sp size
   ppo_epochs: ${actor_rollout_ref.actor.ppo_epochs}
@@ -189,6 +200,10 @@ algorithm:
     target_kl: 0.1
 
 trainer:
+  device: cuda   ###
+  npu_profile:  ####
+    enable: false       
+    options: {}  
   balance_batch: True
   total_epochs: 30
   total_training_steps: null
@@ -210,6 +225,7 @@ trainer:
   default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}
   max_actor_ckpt_to_keep: null
   max_critic_ckpt_to_keep: null
+  # profile_steps: 1
 
 reward_config:
   alpha: 0.01
