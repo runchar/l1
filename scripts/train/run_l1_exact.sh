@@ -21,7 +21,7 @@ done
 
 # Set default model path if not provided
 if [ -z "$MODEL_PATH" ]; then
-    MODEL_PATH="/mnt/f/WorkSpace/Thinking/Qwen/Qwen3-0.6B"
+    MODEL_PATH="/root/autodl-tmp/Qwen3-0.6B"
 fi
 
 
@@ -34,8 +34,8 @@ fi
 # Train over a single node, 8 A100-80GB GPUs.
 python3 main_ppo.py \
     algorithm.adv_estimator=grpo \
-    data.train_files=$HOME/deepscaler/data/train.parquet \
-    data.val_files=$HOME/deepscaler/data/aime.parquet \
+    data.train_files=/root/autodl-tmp/deepscaler/data/train.parquet \
+    data.val_files=/root/autodl-tmp/deepscaler/data/aime.parquet \
     data.train_batch_size=1 \
     data.val_batch_size=2 \
     data.max_prompt_length=512 \
@@ -66,10 +66,10 @@ python3 main_ppo.py \
     trainer.experiment_name='l1_exact' \
     trainer.n_gpus_per_node=1 \
     trainer.nnodes=1 \
-    trainer.save_freq=20 \
-    trainer.test_freq=20 \
+    trainer.save_freq=200 \
+    trainer.test_freq=200 \
     trainer.default_hdfs_dir=null \
-    trainer.total_epochs=3 "${@:1}" \
+    trainer.total_epochs=1 "${@:1}" \
     reward_config.sigmoid_reward=False \
     reward_config.linear_reward=True \
     reward_config.multiplier_reward=False \
